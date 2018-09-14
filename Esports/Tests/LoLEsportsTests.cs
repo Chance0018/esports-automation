@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Framework.Services;
 using League.Com.Pages;
+using League.Merch.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -70,6 +71,30 @@ namespace Tests
             // compare the API stats to the Page stats
             Assert.AreEqual(Math.Round(bjergsenApi.KDA, 1), bjergsenPage.KDA);
             Assert.AreEqual(Math.Round(doubleliftApi.KDA, 1), doubleliftPage.KDA);
+        }
+
+        [Test]
+        public void Merch_test_buy_shirt()
+        {
+            // 1.Navigate to the Clothing Tab
+            Driver.Navigate().GoToUrl("https://www.lolesports.com");
+            var esportshome = new LolEsportsHomePage(Driver, Wait);
+            esportshome.LolMenu.GotoMerchandisePage();
+
+            //2. go to clothing
+            var merchandisehome = new ClothingPage(Driver, Wait);
+
+            merchandisehome.Goto();
+
+
+            // 3.Select any clothing item.
+            var items = Driver.FindElements(By.XPath("//ul[contains(@class, 'products-grid')]/li"));
+            items[1].Click();
+
+            //4.Select any size, and quantity 1.
+            //5.Select add to cart
+            //6.Verify the clothing item is in the cart
+
         }
     }
 }
